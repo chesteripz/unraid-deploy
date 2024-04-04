@@ -67,11 +67,11 @@ runs:
           bash -c $DOCKER_CMD
           echo "Re-created container"
 
-          OLD_IMAGES=$(docker images | grep '<none>' | grep "$DOCKER_TAG" | grep -Eo '[0-9a-f]{12}' | tr '\n' ' ')
+          OLD_IMAGES=$(docker images | grep '<none>' | grep "$DOCKER_TAG" | grep -Eo '[0-9a-f]{12}' | tr '\n' ' ' | xargs)
 
-          if [ OLD_IMAGES ]; then
-          docker image rm $OLD_IMAGES;
-          echo "Removed old images";
+          if [ -n "$OLD_IMAGES" ]; then
+            docker image rm $OLD_IMAGES;
+            echo "Removed old images";
           fi
 
 branding:
